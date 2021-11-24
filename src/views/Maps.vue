@@ -2,7 +2,7 @@
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <ion-title>Maps</ion-title>
+        <ion-title size="large">Maps</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true">
@@ -11,18 +11,55 @@
           <ion-title size="large">Maps</ion-title>
         </ion-toolbar>
       </ion-header>
-      
-      <ExploreContainer name="Maps page" />
+     <ion-item>
+       <ion-label>Teste Mapa</ion-label>
+     </ion-item>
+
+      <ion-item>
+       <ion-label>Latitude {{posicao.latitude}}</ion-label>
+       <ion-label>Longitude</ion-label>
+       <ion-label>Altitude</ion-label>
+     </ion-item>
+
+     <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+     <ion-fab-button @click="getCurrentPosition()">
+     <ion-icon :icon="locate"></ion-icon>
+     </ion-fab-button>
+     </ion-fab>
     </ion-content>
   </ion-page>
 </template>
 
 <script lang="ts">
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/vue';
-import ExploreContainer from '@/components/ExploreContainer.vue';
+import {
+  IonPage,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonContent,
+  IonFab,
+  IonFabButton,
+  IonIcon,
+} from "@ionic/vue";
 
-export default  {
-  name: 'Tab3',
-  components: { ExploreContainer, IonHeader, IonToolbar, IonTitle, IonContent, IonPage }
-}
+import{maps} from "@/composables/maps";
+import { locate } from "ionicons/icons";
+
+
+
+
+export default {
+  name: "Maps",
+  components: { IonHeader, IonToolbar, IonTitle, IonContent, IonPage, IonFab,
+  IonFabButton,
+  IonIcon, },
+  setup() {
+    const { getCurrentPosition,posicao } = maps();
+    return {
+      locate,
+      getCurrentPosition,
+      posicao,
+    };
+  },
+};
 </script>
